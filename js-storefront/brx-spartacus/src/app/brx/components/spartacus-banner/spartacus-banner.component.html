@@ -1,0 +1,12 @@
+<div class="jumbotron mb-3" [ngClass]="{ 'has-edit-button': page.isPreview() }">
+  <ng-container
+    [brManageContentButton]="document"
+    documentTemplateQuery="new-banner-document"
+    folderTemplateQuery="new-banner-folder"
+    parameter="document"
+    root="banners"
+    [relative]="true">
+  </ng-container>
+
+  <ng-template appSpartacusBanner></ng-template>
+</div>

@@ -1,0 +1,10 @@
+{
+    "applications": [
+        {
+            "name": "brx-spartacus",
+            "path": "brx-spartacus",
+            "enableSSR": true
+        }
+    ],
+        "nodeVersion": "12"
+}
