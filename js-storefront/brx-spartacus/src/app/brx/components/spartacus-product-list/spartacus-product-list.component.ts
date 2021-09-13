@@ -3,6 +3,7 @@ import { Component as BrComponent, Document, ImageSet, Page } from '@bloomreach/
 import { CmsBannerComponent, ConfigModule } from '@spartacus/core';
 import { BannerComponent, CmsComponentData, PageLayoutService, ProductListComponent, ProductListComponentService, ViewConfig } from '@spartacus/storefront';
 import { of } from 'rxjs';
+import { SpartacusProductListComponentService } from '../../services/spartacus-product-list-component.service';
 import { SpartacusProductListDirective } from './spartacus-product-list.directive';
 
 @Component({
@@ -18,7 +19,7 @@ export class SpartacusProductListComponent implements OnInit {
 
   constructor(
     private readonly componentFactoryResolver: ComponentFactoryResolver,
-    private productListComponentService: ProductListComponentService,
+    private productListComponentService: SpartacusProductListComponentService,
     private pageLayoutService: PageLayoutService,
   ) { }
 
