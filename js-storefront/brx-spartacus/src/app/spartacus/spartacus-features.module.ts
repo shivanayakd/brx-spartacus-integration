@@ -61,6 +61,7 @@ import {
   WishListModule
 } from '@spartacus/storefront';
 import { BrxProductSearchModule } from '../brx/adapters/brx-product-search.module';
+import { BrxProductNormalizerModule } from '../brx/normalizers/brx-product-normalizer.module';
 import { CmsBrxModule } from './brx/cms-brx.module';
 import { CartSavedCartFeatureModule } from './features/cart/cart-saved-cart-feature.module';
 import { CheckoutFeatureModule } from './features/checkout/checkout-feature.module';
@@ -145,7 +146,8 @@ import { UserFeatureModule } from './features/user/user-feature.module';
     CheckoutFeatureModule,
     CartSavedCartFeatureModule,
     CmsBrxModule,
-    BrxProductSearchModule
+    BrxProductSearchModule,
+    BrxProductNormalizerModule
   ]
 })
 export class SpartacusFeaturesModule { }
