@@ -33,8 +33,11 @@ export class SpartacusProductListComponent implements OnInit {
     viewContainerRef.clear();
 
     const { pagesize, infinitescrollActive, infinitescrollLimit, infinitescrollMore } = this.component.getParameters<ProductListParams>();
+
+    console.log('+++++', this.component.getParameters());
     const scrollConfig: ViewConfig =  {
       view: {
+        defaultPageSize: pagesize,
         infiniteScroll: {
           active: infinitescrollActive,
           productLimit: infinitescrollLimit,

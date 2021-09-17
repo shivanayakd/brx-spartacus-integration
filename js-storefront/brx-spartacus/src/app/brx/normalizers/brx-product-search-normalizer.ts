@@ -1,3 +1,4 @@
+import { BrxEndpointService } from './../services/brx-endpoint.service';
 import { Injectable } from '@angular/core';
 import { Converter, ConverterService, Occ, ProductSearchPage, PRODUCT_NORMALIZER } from '@spartacus/core';
 
@@ -6,7 +7,7 @@ import { Converter, ConverterService, Occ, ProductSearchPage, PRODUCT_NORMALIZER
 })
 export class BrxProductSearchNormalizer implements Converter<any, ProductSearchPage> {
 
-  constructor(private converterService: ConverterService) {
+  constructor(private converterService: ConverterService, private brxendpointservice: BrxEndpointService) {
   }
 
   convert(
@@ -30,37 +31,37 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
         "pageSize": 12,
         "sort": "relevance",
         "totalPages": 15,
-        "totalResults": 175
+        "totalResults": source.response.numFound
     },
       products: source.response.docs,
       sorts: [
+        // {
+        //     "code": "relevance",
+        //     "name": "Relevance",
+        //     "selected": true
+        // },
         {
-            "code": "relevance",
-            "name": "Relevance",
+            "code": "reviews+desc",
+            "name": "Top Rated",
             "selected": true
         },
         {
-            "code": "topRated",
-            "name": "Top Rated",
-            "selected": false
-        },
-        {
-            "code": "name-asc",
+            "code": "title-asc",
             "name": "Name (ascending)",
             "selected": false
         },
         {
-            "code": "name-desc",
+            "code": "title-desc",
             "name": "Name (descending)",
             "selected": false
         },
         {
-            "code": "price-asc",
+            "code": "price+asc",
             "name": "Price (lowest first)",
             "selected": false
         },
         {
-            "code": "price-desc",
+            "code": "price+desc",
             "name": "Price (highest first)",
             "selected": false
         }
@@ -76,7 +77,7 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
     }
 
     target.sorts = src.sorts;
-    target.pagination = src.pagination;
+    target.pagination = this.brxendpointservice.getPaginationDetails(source.response.numFound);
 
     console.log('[****Normalizer]', target);
     return target;

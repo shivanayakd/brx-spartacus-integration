@@ -1,5 +1,6 @@
+import { formatCurrency, getCurrencySymbol } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { Converter, ConverterService, ImageType, PriceType, Product, ProductSearchPage } from '@spartacus/core';
+import { Converter, ConverterService, ImageType, Price, PriceType, Product, ProductSearchPage } from '@spartacus/core';
 
 @Injectable({
   providedIn: 'root'
@@ -27,13 +28,17 @@ export class BrxProductNormalizer implements Converter<any, Product> {
 
     // target.sorts = src.sorts;
     target = {
-      price: source.sale_price,
+      price: this.normalizePrice(source.sale_price),
       priceRange: {maxPrice: source.price_range[0],minPrice: source.price_range[1]},
       averageRating: source.score,
       description: source.description,
       name: source.title,
       nameHtml: source.title,
       url: source.url,
+      code: source.pid,
+      stock: {
+        stockLevelStatus: "inStock"
+    },
       images: {
         PRIMARY: {
             thumbnail: {
@@ -52,5 +57,29 @@ export class BrxProductNormalizer implements Converter<any, Product> {
 
     // console.log('[****Product --- Normalizer]', target);
     return target;
+  }
+
+  normalizePrice(val:any): Price {
+
+    const currencySymbol: string = getCurrencySymbol(
+      "USD",
+      'narrow',
+      'en'
+    );
+
+    const priceformatedval = formatCurrency(
+      val,
+      'en',
+      currencySymbol,
+      "USD"
+    );
+    
+    return {
+      currencyIso: "USD",
+      formattedValue: priceformatedval,
+      priceType: PriceType.BUY,
+      value: val
+  }
+
   }
 }
