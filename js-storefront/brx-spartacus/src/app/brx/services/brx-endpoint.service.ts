@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { SearchConfig } from '@spartacus/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BrxEndpointService {
 
-  smEndPoint = "https://core.dxpapi.com/api/v1/core/";
+  smEndPoint = environment.smEndPoint;
   acccountId = "account_id=6429";
   domainKey = "domain_key=brxsaas_eng01";
   authKey = "auth_key=rb7krhviimqez2j6";
@@ -31,10 +32,9 @@ export class BrxEndpointService {
 
   buildUrl(query: string,searchConfig: SearchConfig): string {
     const {pageSize,currentPage, sort} = searchConfig;
-    this.sort = sort ? sort : '';
+    this.sort = sort ? sort : 'reviews+desc';
     this.currentPage = currentPage ? +currentPage : 0;
     this.start = this.currentPage * this.rows;
-    console.log('>>>>>>> 4444444', searchConfig,sort, query);
     return `${this.smEndPoint}?${this.acccountId}&${this.domainKey}&${this.authKey}&${this.viewId}&${this.reqId}&${this.brUid}&${this.reqType}&${this.searchType}&${this.url}&${this.refUrl}&${this.fl}&${this.relm}&rows=${this.rows}&start=${this.start}&${this.q}&${this.facet}&sort=${sort ? sort : ''}`;
   }
 
@@ -45,19 +45,7 @@ export class BrxEndpointService {
       "sort": this.sort,
       "totalPages": Math.ceil(total/this.rows),
       "totalResults": total
-  }
+    }
   }
 }
 
-
-// export const PRODUCT_LISTING = {
-//   PRODUCTS_PER_PAGE: 12,
-//   SORTING_TYPES: {
-//     BY_TOP_RATED: 'Top Rated',
-//     BY_RELEVANCE: 'Relevance',
-//     BY_PRICE_ASC: 'Price (lowest first)',
-//     BY_PRICE_DESC: 'Price (highest first)',
-//     BY_NAME_ASC: 'Name (ascending)',
-//     BY_NAME_DESC: 'Name (descending)',
-//   },
-// };

@@ -5,6 +5,7 @@
 export const environment = {
   //endpoint: 'https://hap-saas.eng02.bloomreach.cloud/site/spa-angular-csr/resourceapi',
   endpoint: 'https://spartacus-sandbox.bloomreach.io/delivery/site/v1/channels/spartacus/pages',
+  smEndPoint: 'https://core.dxpapi.com/api/v1/core/',
   production: false,
 };
 

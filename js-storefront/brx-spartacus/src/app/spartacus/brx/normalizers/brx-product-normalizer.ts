@@ -54,8 +54,6 @@ export class BrxProductNormalizer implements Converter<any, Product> {
         }
     }
     }
-
-    // console.log('[****Product --- Normalizer]', target);
     return target;
   }
 

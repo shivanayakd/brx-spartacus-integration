@@ -34,7 +34,6 @@ export class SpartacusProductListComponent implements OnInit {
 
     const { pagesize, infinitescrollActive, infinitescrollLimit, infinitescrollMore } = this.component.getParameters<ProductListParams>();
 
-    console.log('+++++', this.component.getParameters());
     const scrollConfig: ViewConfig =  {
       view: {
         defaultPageSize: pagesize,
