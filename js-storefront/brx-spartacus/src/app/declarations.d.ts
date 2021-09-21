@@ -48,3 +48,12 @@ interface ProductListParams {
   infinitescrollLimit?: number;
   infinitescrollMore?: boolean;
 }
+
+interface SearchBoxParams {
+  maxSuggestions?: number;
+  maxProducts?: number;
+  displaySuggestions?: boolean;
+  displayProducts?: boolean;
+  displayProductImages?: boolean;
+  minCharactersBeforeRequest?: number;
+}

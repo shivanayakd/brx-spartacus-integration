@@ -1,8 +1,6 @@
 import { Component, ComponentFactoryResolver, Injector, Input, OnInit, ViewChild } from '@angular/core';
-import { Component as BrComponent, Document, ImageSet, Page } from '@bloomreach/spa-sdk';
-import { CmsBannerComponent, ConfigModule } from '@spartacus/core';
-import { BannerComponent, CmsComponentData, PageLayoutService, ProductListComponent, ProductListComponentService, ViewConfig } from '@spartacus/storefront';
-import { of } from 'rxjs';
+import { Component as BrComponent, Page } from '@bloomreach/spa-sdk';
+import { PageLayoutService, ProductListComponent, ProductListComponentService, ViewConfig } from '@spartacus/storefront';
 import { SpartacusProductListComponentService } from '../../services/spartacus-product-list-component.service';
 import { SpartacusProductListDirective } from './spartacus-product-list.directive';
 

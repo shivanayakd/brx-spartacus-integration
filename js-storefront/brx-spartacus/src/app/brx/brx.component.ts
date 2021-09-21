@@ -11,6 +11,7 @@ import {BannerComponent} from './components/banner/banner.component';
 import {SpartacusBannerComponent} from './components/spartacus-banner/spartacus-banner.component';
 import {HttpErrorResponse} from '@angular/common/http';
 import { SpartacusProductListComponent } from './components/spartacus-product-list/spartacus-product-list.component';
+import { SpartacusSearchBoxComponent } from './components/spartacus-search-box/spartacus-search-box.component';
 
 export const ENDPOINT = new InjectionToken<string>('brXM API endpoint');
 
@@ -28,6 +29,7 @@ export class BrxComponent implements OnInit {
     Banner: BannerComponent,
     SpartacusBanner: SpartacusBannerComponent,
     SpartacusProductList: SpartacusProductListComponent,
+    SpartacusSearchBox: SpartacusSearchBoxComponent,
   };
 
   page?: Page;
