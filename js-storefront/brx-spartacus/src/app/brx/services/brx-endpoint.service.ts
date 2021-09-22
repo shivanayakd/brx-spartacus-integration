@@ -7,35 +7,76 @@ import { environment } from 'src/environments/environment';
 })
 export class BrxEndpointService {
 
+  // Get Values Form Env
   smEndPoint = environment.smEndPoint;
-  acccountId = "account_id=6429";
-  domainKey = "domain_key=brxsaas_eng01";
-  authKey = "auth_key=rb7krhviimqez2j6";
-  viewId = "view_id=";
-  reqId = "request_id=1631132135486";
-  brUid = "_br_uid_2=";
-  reqType = "request_type=search";
-  searchType = "search_type=keyword";
-  url = "url=http%3A%2F%2Flocalhost%3A4000%2Fgraphql";
-  refUrl = "ref_url=";
-  fl = "fl=pid,title,brand,price,sale_price,promotions,thumb_image,sku_thumb_images,sku_swatch_images,sku_color_group,url,price_range,sale_price_range,description,is_live,score,skuid"
-  relm = "realm=prod";
-  rows = 5;
+  acccountId = environment.acccountId; 
+  domainKey = environment.domainKey; 
+  authKey = environment.authKey; 
+  
+  // Default parameters
+  DEFAULT_PARAMS = {
+    request_type: 'search',
+    search_type: 'category',
+    fl: [
+      'pid',
+      'title',
+      'brand',
+      'price',
+      'sale_price',
+      'promotions',
+      'thumb_image',
+      'sku_thumb_images',
+      'sku_swatch_images',
+      'sku_color_group',
+      'url',
+      'price_range',
+      'sale_price_range',
+      'description',
+      'is_live',
+      'score',
+    ].join(','),
+    realm: 'prod',
+    facet: 'true',
+  };
+  
+  brUid = ""; // Ned to grab from Cookie name is _br_uid_2
+  rows = 12; // default page size as per Spartacus
   start = 0;
-  q = "q=nuts";
-  facet = "facet=true";
+  query = ""; // By Default its empty but need to grab from Search box 
   sort: string = "";
   currentPage: number = 0; 
 
+  // Still to configure
+  viewId = "";
+  refUrl = ""; 
 
   constructor() { }
 
-  buildUrl(query: string,searchConfig: SearchConfig): string {
-    const {pageSize,currentPage, sort} = searchConfig;
-    this.sort = sort ? sort : 'reviews+desc';
+  buildUrl(query: string = "",searchConfig: SearchConfig): string {
+
+    const {currentPage, sort} = searchConfig;
+    this.sort = sort ? sort : '';
     this.currentPage = currentPage ? +currentPage : 0;
     this.start = this.currentPage * this.rows;
-    return `${this.smEndPoint}?${this.acccountId}&${this.domainKey}&${this.authKey}&${this.viewId}&${this.reqId}&${this.brUid}&${this.reqType}&${this.searchType}&${this.url}&${this.refUrl}&${this.fl}&${this.relm}&rows=${this.rows}&start=${this.start}&${this.q}&${this.facet}&sort=${sort ? sort : ''}`;
+    this.query = query;
+
+    const params = new URLSearchParams({
+      account_id: this.acccountId,
+      domain_key: this.domainKey,
+      auth_key: this.authKey,
+      view_id: "",
+      request_id: Date.now().toString(),
+      _br_uid_2: this.brUid,
+      url: window.location.href,
+      ref_url: this.refUrl,
+      ...this.DEFAULT_PARAMS,
+      rows: this.rows.toString(),
+      start: '0',
+      q: this.query,
+      sort: this.sort
+    });
+
+    return `${this.smEndPoint}?${params.toString()}`;
   }
 
   getPaginationDetails(total: number) {
@@ -46,6 +87,10 @@ export class BrxEndpointService {
       "totalPages": Math.ceil(total/this.rows),
       "totalResults": total
     }
+  }
+
+  setPageSize(size: number) {
+    this.rows = size;
   }
 }
 

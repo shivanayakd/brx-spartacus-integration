@@ -30,9 +30,14 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
       products: source.response.docs,
       sorts: [
         {
+          "code": "",
+          "name": "Relevance",
+          "selected": true
+        },
+        {
             "code": "reviews+desc",
             "name": "Top Rated",
-            "selected": true
+            "selected": false
         },
         {
             "code": "title+asc",

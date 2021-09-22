@@ -1,3 +1,4 @@
+import { BrxEndpointService } from './../../services/brx-endpoint.service';
 import { Component, ComponentFactoryResolver, Injector, Input, OnInit, ViewChild } from '@angular/core';
 import { Component as BrComponent, Page } from '@bloomreach/spa-sdk';
 import { PageLayoutService, ProductListComponent, ProductListComponentService, ViewConfig } from '@spartacus/storefront';
@@ -19,6 +20,7 @@ export class SpartacusProductListComponent implements OnInit {
     private readonly componentFactoryResolver: ComponentFactoryResolver,
     private productListComponentService: SpartacusProductListComponentService,
     private pageLayoutService: PageLayoutService,
+    private brxendpointservice: BrxEndpointService
   ) { }
 
   ngOnInit(): void {
@@ -32,6 +34,7 @@ export class SpartacusProductListComponent implements OnInit {
 
     const { pagesize, infinitescrollActive, infinitescrollLimit, infinitescrollMore } = this.component.getParameters<ProductListParams>();
 
+    this.brxendpointservice.setPageSize(pagesize);
     const scrollConfig: ViewConfig =  {
       view: {
         defaultPageSize: pagesize,
