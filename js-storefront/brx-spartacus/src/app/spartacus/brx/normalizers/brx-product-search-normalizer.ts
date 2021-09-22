@@ -7,7 +7,7 @@ import { Converter, ConverterService, Occ, ProductSearchPage, PRODUCT_NORMALIZER
 })
 export class BrxProductSearchNormalizer implements Converter<any, ProductSearchPage> {
 
-  constructor(private converterService: ConverterService, private brxendpointservice: BrxEndpointService) {
+  constructor(private converterService: ConverterService, private brxEndpointService: BrxEndpointService) {
   }
 
   convert(
@@ -35,34 +35,34 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
           "selected": true
         },
         {
-            "code": "reviews+desc",
-            "name": "Top Rated",
-            "selected": false
+          "code": "reviews+desc",
+          "name": "Top Rated",
+          "selected": false
         },
         {
-            "code": "title+asc",
-            "name": "Name (ascending)",
-            "selected": false
+          "code": "title+asc",
+          "name": "Name (ascending)",
+          "selected": false
         },
         {
-            "code": "title+desc",
-            "name": "Name (descending)",
-            "selected": false
+          "code": "title+desc",
+          "name": "Name (descending)",
+          "selected": false
         },
         {
-            "code": "price+asc",
-            "name": "Price (lowest first)",
-            "selected": false
+          "code": "price+asc",
+          "name": "Price (lowest first)",
+          "selected": false
         },
         {
-            "code": "price+desc",
-            "name": "Price (highest first)",
-            "selected": false
+          "code": "price+desc",
+          "name": "Price (highest first)",
+          "selected": false
         }
-    ],
+      ],
       spellingSuggestion: {}
     }
-    
+
     if (src.products) {
       target.products = src.products.map((data: any) =>
         this.converterService.convert(data, PRODUCT_NORMALIZER)
@@ -71,7 +71,7 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
 
     // Convert the Source to target
     target.sorts = src.sorts;
-    target.pagination = this.brxendpointservice.getPaginationDetails(source.response.numFound);
+    target.pagination = this.brxEndpointService.getPaginationDetails(source.response.numFound);
     return target;
   }
 }

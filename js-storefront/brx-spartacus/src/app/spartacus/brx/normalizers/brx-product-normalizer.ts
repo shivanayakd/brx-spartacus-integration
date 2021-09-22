@@ -29,7 +29,7 @@ export class BrxProductNormalizer implements Converter<any, Product> {
     // target.sorts = src.sorts;
     target = {
       price: this.normalizePrice(source.sale_price),
-      priceRange: {maxPrice: source.price_range[0],minPrice: source.price_range[1]},
+      priceRange: source.price_range ? { maxPrice: source.price_range[0], minPrice: source.price_range[1] } : undefined,
       averageRating: source.score,
       description: source.description,
       name: source.title,
@@ -57,7 +57,7 @@ export class BrxProductNormalizer implements Converter<any, Product> {
     return target;
   }
 
-  normalizePrice(val:any): Price {
+  normalizePrice(val: any): Price {
 
     const currencySymbol: string = getCurrencySymbol(
       "USD",
@@ -71,13 +71,13 @@ export class BrxProductNormalizer implements Converter<any, Product> {
       currencySymbol,
       "USD"
     );
-    
+
     return {
       currencyIso: "USD",
       formattedValue: priceformatedval,
       priceType: PriceType.BUY,
       value: val
-  }
+    };
 
   }
 }
