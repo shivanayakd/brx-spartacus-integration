@@ -1,0 +1,29 @@
+.footer {
+  background-color: #212738;
+  padding: 70px 0;
+  .container {
+    display: flex;
+    justify-content: space-evenly;
+    p {
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+      li {
+        color: #fff;
+        font-size: 0.8em;
+        line-height: 2.2em;
+      }
+    }
+  }
+}
+
+.footer-two {
+  p {
+    text-align: center;
+    margin: 20px;
+  }
+}
