@@ -15,6 +15,7 @@ import { SpartacusSearchBoxDirective } from './components/spartacus-search-box/s
 import {IsExternalLinkPipe} from './pipes/is-external-link.pipe';
 import {IsInternalLinkPipe} from './pipes/is-internal-link.pipe';
 import {ParseUrlPipe} from './pipes/parse-url.pipe';
+import { SpartacusSearchboxService } from './services/spartacus-searchbox.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,7 @@ import {ParseUrlPipe} from './pipes/parse-url.pipe';
     BrxComponent,
   ],
   providers: [
-    {provide: ENDPOINT, useValue: environment.endpoint}
+    { provide: ENDPOINT, useValue: environment.endpoint }
   ],
 })
 export class BrxModule {

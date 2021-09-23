@@ -1,8 +1,10 @@
 import { Component, ComponentFactoryResolver, Injector, Input, OnInit, ViewChild } from "@angular/core";
 import { Component as BrComponent, Page } from '@bloomreach/spa-sdk';
-import { CmsSearchBoxComponent } from "@spartacus/core";
-import { CmsComponentData, SearchBoxComponent } from "@spartacus/storefront";
+import { CmsSearchBoxComponent, SearchboxService } from "@spartacus/core";
+import { CmsComponentData, SearchBoxComponent, SearchBoxComponentService } from "@spartacus/storefront";
 import { of } from "rxjs";
+import { SpartacusSearchBoxComponentService } from "../../services/spartacus-search-box-component.service";
+import { SpartacusSearchboxService } from "../../services/spartacus-searchbox.service";
 import { SpartacusSearchBoxDirective } from "./spartacus-search-box.directive";
 
 @Component({
@@ -18,6 +20,7 @@ export class SpartacusSearchBoxComponent implements OnInit {
 
   constructor(
     private readonly componentFactoryResolver: ComponentFactoryResolver,
+    private readonly searchBoxComponentService: SpartacusSearchBoxComponentService,
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +53,7 @@ export class SpartacusSearchBoxComponent implements OnInit {
     const componentInjector = Injector.create({
       providers: [
         { provide: CmsComponentData, useValue: { data$: of(componentProperties) } },
+        { provide: SearchBoxComponentService, useValue: this.searchBoxComponentService },
       ]
     });
 

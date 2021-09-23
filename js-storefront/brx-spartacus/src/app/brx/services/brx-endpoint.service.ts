@@ -9,10 +9,11 @@ export class BrxEndpointService {
 
   // Get Values Form Env
   smEndPoint = environment.smEndPoint;
-  acccountId = environment.acccountId; 
-  domainKey = environment.domainKey; 
-  authKey = environment.authKey; 
-  
+  accountId = environment.accountId;
+  domainKey = environment.domainKey;
+  authKey = environment.authKey;
+  smSuggestionEndPoint = environment.smSuggestionEndPoint;
+
   // Default parameters
   DEFAULT_PARAMS = {
     request_type: 'search',
@@ -38,21 +39,22 @@ export class BrxEndpointService {
     realm: 'prod',
     facet: 'true',
   };
-  
+
   brUid = ""; // Ned to grab from Cookie name is _br_uid_2
   rows = 12; // default page size as per Spartacus
   start = 0;
-  query = ""; // By Default its empty but need to grab from Search box 
+  query = ""; // By Default its empty but need to grab from Search box
   sort: string = "";
-  currentPage: number = 0; 
+  currentPage: number = 0;
 
   // Still to configure
   viewId = "";
-  refUrl = ""; 
+  refUrl = "";
+  catalogViews = '';
 
   constructor() { }
 
-  buildUrl(query: string = "",searchConfig: SearchConfig): string {
+  buildSearchUrl(query: string = "", searchConfig: SearchConfig): string {
 
     const {currentPage, sort} = searchConfig;
     this.sort = sort ? sort : '';
@@ -61,7 +63,7 @@ export class BrxEndpointService {
     this.query = query;
 
     const params = new URLSearchParams({
-      account_id: this.acccountId,
+      account_id: this.accountId,
       domain_key: this.domainKey,
       auth_key: this.authKey,
       view_id: "",
@@ -91,6 +93,29 @@ export class BrxEndpointService {
 
   setPageSize(size: number) {
     this.rows = size;
+  }
+
+  buildSuggestionUrl(term: string = ''): string {
+    const params = new URLSearchParams({
+      account_id: this.accountId,
+      auth_key: this.authKey,
+      request_id: new Date().getTime().toString(),
+      _br_uid_2: this.brUid,
+      url: window.location.href,
+      ref_url: this.refUrl,
+      request_type: 'suggest',
+      rsp_fmt: 'v2',
+      q: term,
+    });
+
+    if (this.catalogViews) {
+      params.append('catalog_views', this.catalogViews);
+      params.append('rsp_fmt', 'v2');
+      return `${this.smSuggestionEndPoint}v2/suggest/?${params}`;
+    }
+
+    params.append('domain_key', this.domainKey);
+    return `${this.smSuggestionEndPoint}v1/suggest/?${params}`;
   }
 }
 
