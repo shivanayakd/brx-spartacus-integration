@@ -52,3 +52,16 @@
     }
   }
 }
+
+:host ::ng-deep {
+  cx-searchbox {
+    z-index: 11;
+    input {
+      outline: none;
+      color: #fff;
+    }
+    cx-icon.cx-icon {
+      color: #fff;
+    }
+  }
+}
