@@ -5,12 +5,12 @@
   (state)="setVisitor($event)"
 >
   <ng-template let-page="page">
-    <app-header></app-header>
     <cx-storefront></cx-storefront>
     <ng-template
       cxOutletRef="cx-storefront"
       [cxOutletPos]="outletPosition.REPLACE"
     >
+      <app-header></app-header>
       <ng-container *ngIf="!brxHttpError" brComponent="main"></ng-container>
     </ng-template>
     <app-footer></app-footer>
