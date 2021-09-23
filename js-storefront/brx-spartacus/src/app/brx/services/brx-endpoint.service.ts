@@ -3,10 +3,9 @@ import { SearchConfig } from '@spartacus/core';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BrxEndpointService {
-
   // Get Values Form Env
   smEndPoint = environment.smEndPoint;
   accountId = environment.accountId;
@@ -40,23 +39,22 @@ export class BrxEndpointService {
     facet: 'true',
   };
 
-  brUid = ""; // Ned to grab from Cookie name is _br_uid_2
+  brUid = ''; // Ned to grab from Cookie name is _br_uid_2
   rows = 12; // default page size as per Spartacus
   start = 0;
-  query = ""; // By Default its empty but need to grab from Search box
-  sort: string = "";
+  query = ''; // By Default its empty but need to grab from Search box
+  sort: string = '';
   currentPage: number = 0;
 
   // Still to configure
-  viewId = "";
-  refUrl = "";
+  viewId = '';
+  refUrl = '';
   catalogViews = '';
 
-  constructor() { }
+  constructor() {}
 
-  buildSearchUrl(query: string = "", searchConfig: SearchConfig): string {
-
-    const {currentPage, sort} = searchConfig;
+  buildSearchUrl(query: string = '', searchConfig: SearchConfig): string {
+    const { currentPage, sort } = searchConfig;
     this.sort = sort ? sort : '';
     this.currentPage = currentPage ? +currentPage : 0;
     this.start = this.currentPage * this.rows;
@@ -66,29 +64,29 @@ export class BrxEndpointService {
       account_id: this.accountId,
       domain_key: this.domainKey,
       auth_key: this.authKey,
-      view_id: "",
+      view_id: '',
       request_id: Date.now().toString(),
       _br_uid_2: this.brUid,
       url: window.location.href,
       ref_url: this.refUrl,
       ...this.DEFAULT_PARAMS,
       rows: this.rows.toString(),
-      start: '0',
+      start: this.start.toString(),
       q: this.query,
-      sort: this.sort
+      // sort: this.sort,
     });
 
-    return `${this.smEndPoint}?${params.toString()}`;
+    return `${this.smEndPoint}?${params.toString()}&sort=${this.sort}`;
   }
 
   getPaginationDetails(total: number) {
     return {
-      "currentPage": this.currentPage,
-      "pageSize": this.rows,
-      "sort": this.sort,
-      "totalPages": Math.ceil(total/this.rows),
-      "totalResults": total
-    }
+      currentPage: this.currentPage,
+      pageSize: this.rows,
+      sort: this.sort,
+      totalPages: Math.ceil(total / this.rows),
+      totalResults: total,
+    };
   }
 
   setPageSize(size: number) {
@@ -118,4 +116,3 @@ export class BrxEndpointService {
     return `${this.smSuggestionEndPoint}v1/suggest/?${params}`;
   }
 }
-

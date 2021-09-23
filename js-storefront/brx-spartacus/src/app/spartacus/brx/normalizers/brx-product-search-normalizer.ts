@@ -1,25 +1,31 @@
 import { BrxEndpointService } from '../../../brx/services/brx-endpoint.service';
 import { Injectable } from '@angular/core';
-import { Converter, ConverterService, Occ, ProductSearchPage, PRODUCT_NORMALIZER } from '@spartacus/core';
+import {
+  Converter,
+  ConverterService,
+  Occ,
+  ProductSearchPage,
+  PRODUCT_NORMALIZER,
+} from '@spartacus/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class BrxProductSearchNormalizer implements Converter<any, ProductSearchPage> {
+export class BrxProductSearchNormalizer
+  implements Converter<any, ProductSearchPage>
+{
+  constructor(
+    private converterService: ConverterService,
+    private brxEndpointService: BrxEndpointService
+  ) {}
 
-  constructor(private converterService: ConverterService, private brxEndpointService: BrxEndpointService) {
-  }
-
-  convert(
-    source: any,
-    target: ProductSearchPage = {}
-  ): ProductSearchPage {
+  convert(source: any, target: ProductSearchPage = {}): ProductSearchPage {
     target = {
       ...target,
       ...(source as any),
     };
 
-    const src:ProductSearchPage = {
+    const src: ProductSearchPage = {
       breadcrumbs: [],
       categoryCode: '',
       currentQuery: {},
@@ -30,38 +36,38 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
       products: source.response.docs,
       sorts: [
         {
-          "code": "",
-          "name": "Relevance",
-          "selected": true
+          code: '',
+          name: 'Relevance',
+          selected: true,
         },
         {
-          "code": "reviews+desc",
-          "name": "Top Rated",
-          "selected": false
+          code: 'reviews+desc',
+          name: 'Top Rated',
+          selected: false,
         },
         {
-          "code": "title+asc",
-          "name": "Name (ascending)",
-          "selected": false
+          code: 'title+asc',
+          name: 'Name (ascending)',
+          selected: false,
         },
         {
-          "code": "title+desc",
-          "name": "Name (descending)",
-          "selected": false
+          code: 'title+desc',
+          name: 'Name (descending)',
+          selected: false,
         },
         {
-          "code": "price+asc",
-          "name": "Price (lowest first)",
-          "selected": false
+          code: 'price+asc',
+          name: 'Price (lowest first)',
+          selected: false,
         },
         {
-          "code": "price+desc",
-          "name": "Price (highest first)",
-          "selected": false
-        }
+          code: 'price+desc',
+          name: 'Price (highest first)',
+          selected: false,
+        },
       ],
-      spellingSuggestion: {}
-    }
+      spellingSuggestion: {},
+    };
 
     if (src.products) {
       target.products = src.products.map((data: any) =>
@@ -71,7 +77,9 @@ export class BrxProductSearchNormalizer implements Converter<any, ProductSearchP
 
     // Convert the Source to target
     target.sorts = src.sorts;
-    target.pagination = this.brxEndpointService.getPaginationDetails(source.response.numFound);
+    target.pagination = this.brxEndpointService.getPaginationDetails(
+      source.response.numFound
+    );
     return target;
   }
 }
