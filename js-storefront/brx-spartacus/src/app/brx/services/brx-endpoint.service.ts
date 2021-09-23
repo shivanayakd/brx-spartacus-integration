@@ -16,7 +16,7 @@ export class BrxEndpointService {
   // Default parameters
   DEFAULT_PARAMS = {
     request_type: 'search',
-    search_type: 'category',
+    search_type: 'keyword',
     fl: [
       'pid',
       'title',
