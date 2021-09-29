@@ -10,6 +10,7 @@ import {filter} from 'rxjs/operators';
 import {BannerComponent} from './components/banner/banner.component';
 import {SpartacusBannerComponent} from './components/spartacus-banner/spartacus-banner.component';
 import {HttpErrorResponse} from '@angular/common/http';
+import { SpartacusProductFacetNavigationComponent } from './components/spartacus-product-facet-navigation/spartacus-product-facet-navigation.component';
 import { SpartacusProductListComponent } from './components/spartacus-product-list/spartacus-product-list.component';
 import { SpartacusSearchBoxComponent } from './components/spartacus-search-box/spartacus-search-box.component';
 
@@ -28,6 +29,7 @@ export class BrxComponent implements OnInit {
   mapping = {
     Banner: BannerComponent,
     SpartacusBanner: SpartacusBannerComponent,
+    SpartacusProductFacetNavigation: SpartacusProductFacetNavigationComponent,
     SpartacusProductList: SpartacusProductListComponent,
     SpartacusSearchBox: SpartacusSearchBoxComponent,
   };

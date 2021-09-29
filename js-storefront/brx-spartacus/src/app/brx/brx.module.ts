@@ -8,6 +8,8 @@ import { BrxComponent, ENDPOINT } from './brx.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { SpartacusBannerComponent } from './components/spartacus-banner/spartacus-banner.component';
 import { SpartacusBannerDirective } from './components/spartacus-banner/spartacus-banner.directive';
+import { SpartacusProductFacetNavigationComponent } from './components/spartacus-product-facet-navigation/spartacus-product-facet-navigation.component';
+import { SpartacusProductFacetNavigationDirective } from './components/spartacus-product-facet-navigation/spartacus-product-facet-navigation.directive';
 import { SpartacusProductListComponent } from './components/spartacus-product-list/spartacus-product-list.component';
 import { SpartacusProductListDirective } from './components/spartacus-product-list/spartacus-product-list.directive';
 import { SpartacusSearchBoxComponent } from './components/spartacus-search-box/spartacus-search-box.component';
@@ -28,6 +30,8 @@ import { HeaderComponent } from './templates/header/header.component';
     ParseUrlPipe,
     BrxComponent,
     SpartacusBannerDirective,
+    SpartacusProductFacetNavigationDirective,
+    SpartacusProductFacetNavigationComponent,
     SpartacusProductListComponent,
     SpartacusProductListDirective,
     SpartacusSearchBoxComponent,
