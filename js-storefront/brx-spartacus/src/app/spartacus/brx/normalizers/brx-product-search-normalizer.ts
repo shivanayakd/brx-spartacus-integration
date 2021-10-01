@@ -113,7 +113,7 @@ export class BrxProductSearchNormalizer
 
         return {
           category: false,
-          multiselect: true,
+          multiSelect: true,
           name: facetName,
           values,
           visible: true
