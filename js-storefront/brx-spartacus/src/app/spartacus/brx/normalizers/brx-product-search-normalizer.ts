@@ -8,6 +8,16 @@ import {
   PRODUCT_NORMALIZER,
 } from '@spartacus/core';
 
+interface BloomreachFacet {
+  count: number;
+  crumb: string;
+  cat_name: string;
+  name: string;
+  parent: string;
+  cat_id: string;
+  tree_path: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -75,6 +85,63 @@ export class BrxProductSearchNormalizer
       );
     }
 
+    const sort = source.sort ?? 'relevance';
+    const queryList = source.query?.split(':');
+    const query: string = queryList?.length < 2 ? `${source.query}:${sort}` : source.query;
+    target.facets = Object.entries(source.facet_counts?.facet_fields ?? [])
+      .map((facetEntry) => {
+        const facetName = facetEntry[0];
+        const values = (facetEntry[1] as BloomreachFacet[])
+          .filter((value) => {
+            const facetValue = value.cat_name ?? value.name;
+            return query.indexOf(`${facetName}:${facetValue}`) < 0
+          })
+          .map((value) => {
+            const facetValue = value.cat_name ?? value.name;
+            return {
+              count: value.count,
+              name: facetValue,
+              query : {
+                query : {
+                  value : `${query}:${facetName}:${facetValue}`,
+                },
+                url : `/search?q=${query}%3A${facetName}%2C+${encodeURIComponent(facetValue)}`,
+              },
+              selected: false
+          }
+        }) ?? [];
+
+        return {
+          category: false,
+          multiselect: true,
+          name: facetName,
+          values,
+          visible: true
+        }
+      });
+
+    target.breadcrumbs = [];
+    for (let i = 2; i < queryList.length; i=i+2) {
+      const removeQuery = query.replace(`:${queryList[i]}:${queryList[i+1]}`, '');
+      target.breadcrumbs?.push({
+        facetCode : queryList[i],
+        facetName : queryList[i],
+        facetValueCode : queryList[i+1],
+        facetValueName : queryList[i+1],
+        removeQuery : {
+          query : {
+              value : removeQuery,
+          },
+          url : `/search?q=${encodeURIComponent(removeQuery)}`
+        }
+      });
+    }
+
+    target.currentQuery = {
+      query: {
+        value: `${query}:`
+      },
+    }
     // Convert the Source to target
     target.sorts = src.sorts;
     target.pagination = this.brxEndpointService.getPaginationDetails(
