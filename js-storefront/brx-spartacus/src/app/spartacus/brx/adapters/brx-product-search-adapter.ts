@@ -39,10 +39,22 @@ export class BrxProductSearchAdapter implements ProductSearchAdapter  {
           })),
         );
     }
+    const searchQuery = query.split(':')[0];
+    const url = this.getSearchEndpoint(searchQuery, searchConfig);
 
     return this.http
-      .get(this.getSearchEndpoint(query, searchConfig))
-      .pipe(this.converter.pipeable(PRODUCT_SEARCH_PAGE_NORMALIZER));
+      .get(url)
+      .pipe(
+        map((response: any) => { 
+          return {
+            ...response,
+            query,
+            url,
+            sort: searchConfig.sort,
+          }
+        }),
+        this.converter.pipeable(PRODUCT_SEARCH_PAGE_NORMALIZER)
+      );
   }
 
   loadSuggestions(
